@@ -1,0 +1,114 @@
+<style>
+	/* Add borders to the table */
+.table {
+  border: 1px solid #ccc;
+  border-collapse: collapse;
+}
+
+/* Style the table headers */
+th {
+  font-weight: bold;
+  text-align: center;
+  background-color: #f2f2f2;
+  border: 1px solid #ccc;
+  padding: 8px;
+}
+
+/* Add some spacing between table cells */
+td {
+  padding: 8px;
+  border: 1px solid #ccc;
+}
+
+/* Style the badge labels */
+.badge {
+  font-size: 14px;
+  font-weight: bold;
+  padding: 5px 10px;
+  border-radius: 20px;
+}
+
+/* Add a background color to the Approved badge */
+.bg-success {
+  background-color: #28a745;
+  color: white;
+}
+
+/* Add a background color to the Rejected badge */
+.bg-danger {
+  background-color: #dc3545;
+  color: white;
+}
+
+/* Add a background color to the Pending badge */
+.bg-primary {
+  background-color: #007bff;
+  color: white;
+}
+
+/* Center the text in the container */
+.container {
+  text-align: center;
+  margin-top: 50px;
+}
+
+/* Style the table rows when hovering over them */
+.table-hover tbody tr:hover {
+  background-color: #f5f5f5;
+}
+
+</style>
+{% extends 'student_portal/base.html' %}
+
+{% block head %}
+	<!-- Add a link to the Bootstrap CSS file -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+{% endblock %}
+
+{% block content %}
+	<div class="container">
+		<h1 class="my-4">View Requests</h1>
+		<a href="{% url 'stud_home' %}"><h5 class="my-4">Home</h1></a>
+		{% if requests %}
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>Category</th>
+						<th>Reason</th>
+						<th>From</th>
+						<th>To</th>
+						<th>Duration (Hrs)</th>
+						<th>Status</th>
+						<th>Pass</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for request in requests %}
+						<tr>
+							<td>{{ request.request_type }}</td>
+							<td>{{ request.reason }}</td>
+							<td>{{ request.leave_date_start }}</td>
+							<td>{{ request.leave_date_end }}</td>
+							<td>{{ request.outing_hours }}</td>
+
+							<td>
+								{% if request.is_approved %}
+									<span class="badge bg-success">Approved</span>
+								{% elif request.is_denied %}
+									<span class="badge bg-danger">Rejected</span>
+								{% else %}
+									<span class="badge bg-primary">Pending</span>
+								{% endif %}
+							</td>
+							<td>{{ request.sys_id }}</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		{% else %}
+			<p>You have no requests.</p>
+		{% endif %}
+	</div>
+{% endblock %}
+
+	

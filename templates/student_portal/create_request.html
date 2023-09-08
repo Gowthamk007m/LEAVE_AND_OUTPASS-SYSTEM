@@ -1,0 +1,66 @@
+{% extends 'student_portal/base.html' %}
+
+{% block content %}
+<style>
+	.container {
+  max-width: 500px;
+  margin: auto;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+input[type="text"],
+select {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+
+button[type="submit"] {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+</style>
+<body>
+	
+
+	<div class="container">
+		<h1 class="my-4">Leave/Outing Request</h1>
+		<form method="post">
+			{% csrf_token %}
+			<div class="form-group">
+				<label for="{{ form.request_type.id_for_label }}">Category</label>
+				{{ form.request_type }}
+			</div>
+			<div class="form-group">
+				<label for="{{ form.reason.id_for_label }}">Reason</label>
+				{{ form.reason }}
+			</div>
+			<div class="form-group">
+				<label for="{{ form.leave_date_start.id_for_label }}">From</label>
+				{{ form.leave_date_start }}
+			</div>
+			<div class="form-group">
+				<label for="{{ form.leave_date_end.id_for_label }}">To</label>
+				{{ form.leave_date_end }}
+			</div>
+			<button type="submit" class="btn btn-primary">Submit</button>
+		</form>
+	</div>
+</body>
+{% endblock %}
